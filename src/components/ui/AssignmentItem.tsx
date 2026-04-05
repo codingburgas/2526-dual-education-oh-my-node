@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion';
 import { CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import type { Assignment } from '../../data/data';
+import { fadeRightVariants } from '../../lib/animations';
 
 type AssignmentItemProps = {
   assignment: Assignment;
@@ -21,7 +23,10 @@ export function AssignmentItem({ assignment }: AssignmentItemProps) {
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+    <motion.div
+      variants={fadeRightVariants}
+      className="bg-card border border-border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+    >
       <div className="flex items-start gap-4">
         <div className="mt-1">{getStatusIcon()}</div>
         <div className="flex-1 min-w-0">
@@ -39,13 +44,13 @@ export function AssignmentItem({ assignment }: AssignmentItemProps) {
           >
             {assignment.status}
           </span>
-          {assignment.score !== undefined && (
+          {assignment.score && (
             <span className="text-sm font-semibold text-primary">
               {assignment.score}%
             </span>
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

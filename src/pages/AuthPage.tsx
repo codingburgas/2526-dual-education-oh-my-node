@@ -1,5 +1,6 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { motion } from 'framer-motion';
 import Logo from '../assets/logo.png';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,16 +20,16 @@ export function AuthPage() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-card flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl"></div>
-      </div>
-
       <div className="absolute top-4 right-4 z-10">
         <ThemeToggle />
       </div>
 
-      <div className="w-full max-w-md relative z-10">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="w-full max-w-md relative z-10"
+      >
         <div className="bg-card rounded-lg shadow-md border border-border p-8">
           <div className="text-center mb-8">
             <div className="mb-4">
@@ -78,7 +79,7 @@ export function AuthPage() {
             By signing in, you agree to our Terms of Service and Privacy Policy
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

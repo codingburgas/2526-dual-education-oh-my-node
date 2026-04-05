@@ -1,21 +1,21 @@
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
 import { AchievementBadge } from '../ui/AchievementBadge';
 import { achievements } from '../../data/data';
-import { fadeInVariants, whileInViewSettings } from '../../lib/animations';
+import {
+  fadeLeftVariants,
+  staggerContainerVariants,
+  whileInViewSettings,
+} from '../../lib/animations';
 
 export function AchievementsSection() {
-  const ref = useRef(null);
-
   return (
     <section
       id="achievements"
-      ref={ref}
       className="py-20 px-4 bg-linear-to-b from-card to-background"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div
-          variants={fadeInVariants}
+          variants={fadeLeftVariants}
           initial="hidden"
           whileInView="visible"
           {...whileInViewSettings}
@@ -29,17 +29,15 @@ export function AchievementsSection() {
           </p>
         </motion.div>
 
-        <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          {...whileInViewSettings}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {achievements.map(achievement => (
-            <motion.div
-              key={achievement.id}
-              variants={fadeInVariants}
-              initial="hidden"
-              whileInView="visible"
-              {...whileInViewSettings}
-            >
-              <AchievementBadge achievement={achievement} />
-            </motion.div>
+            <AchievementBadge key={achievement.id} achievement={achievement} />
           ))}
         </motion.div>
       </div>

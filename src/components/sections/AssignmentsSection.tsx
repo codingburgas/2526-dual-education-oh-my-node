@@ -1,21 +1,21 @@
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
 import { AssignmentItem } from '../ui/AssignmentItem';
 import { assignments } from '../../data/data';
-import { fadeInVariants, whileInViewSettings } from '../../lib/animations';
+import {
+  fadeRightVariants,
+  staggerContainerVariants,
+  whileInViewSettings,
+} from '../../lib/animations';
 
 export function AssignmentsSection() {
-  const ref = useRef(null);
-
   return (
     <section
       id="assignments"
-      ref={ref}
       className="py-20 px-4 bg-linear-to-b from-background via-background to-card"
     >
       <div className="max-w-5xl mx-auto">
         <motion.div
-          variants={fadeInVariants}
+          variants={fadeRightVariants}
           initial="hidden"
           whileInView="visible"
           {...whileInViewSettings}
@@ -29,17 +29,15 @@ export function AssignmentsSection() {
           </p>
         </motion.div>
 
-        <motion.div className="space-y-4">
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          {...whileInViewSettings}
+          className="space-y-4"
+        >
           {assignments.map(assignment => (
-            <motion.div
-              key={assignment.id}
-              variants={fadeInVariants}
-              initial="hidden"
-              whileInView="visible"
-              {...whileInViewSettings}
-            >
-              <AssignmentItem assignment={assignment} />
-            </motion.div>
+            <AssignmentItem key={assignment.id} assignment={assignment} />
           ))}
         </motion.div>
       </div>

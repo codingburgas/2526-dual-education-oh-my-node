@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion';
 import { Target, Compass, Check, Zap, Crown } from 'lucide-react';
 import type { Achievement } from '../../data/data';
+import { fadeScaleVariants } from '../../lib/animations';
 
 type AchievementBadgeProps = {
   achievement: Achievement;
@@ -17,7 +19,10 @@ export function AchievementBadge({ achievement }: AchievementBadgeProps) {
   const IconComponent = iconMap[achievement.icon];
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow">
+    <motion.div
+      variants={fadeScaleVariants}
+      className="bg-card border border-border rounded-lg p-6 text-center shadow-sm hover:shadow-md transition-shadow"
+    >
       <div className="mb-4">
         <IconComponent size={48} className="text-accent mx-auto" />
       </div>
@@ -28,6 +33,6 @@ export function AchievementBadge({ achievement }: AchievementBadgeProps) {
       <p className="text-xs text-muted-foreground">
         {new Date(achievement.unlockedDate).toLocaleDateString()}
       </p>
-    </div>
+    </motion.div>
   );
 }

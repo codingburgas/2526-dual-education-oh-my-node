@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { HeroSection } from '../components/sections/HeroSection';
@@ -10,13 +11,17 @@ export function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+      >
         <HeroSection />
         <OverviewSection />
         <SubjectsSection />
         <AssignmentsSection />
         <AchievementsSection />
-      </main>
+      </motion.main>
       <Footer />
     </div>
   );

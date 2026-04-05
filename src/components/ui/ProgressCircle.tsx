@@ -1,4 +1,6 @@
+import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import { fadeScaleVariants } from '../../lib/animations';
 
 type ProgressCircleProps = {
   value: number;
@@ -24,15 +26,15 @@ export function ProgressCircle({ value, label, color }: ProgressCircleProps) {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="relative w-32 h-32">
+    <motion.div variants={fadeScaleVariants} className="flex flex-col items-center">
+      <div className="relative w-40 h-40">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
           <circle
             cx="60"
             cy="60"
             r="45"
             className="stroke-border fill-none"
-            strokeWidth="8"
+            strokeWidth="5"
           />
           <circle
             ref={svgRef}
@@ -40,7 +42,7 @@ export function ProgressCircle({ value, label, color }: ProgressCircleProps) {
             cy="60"
             r="45"
             className={`fill-none transition-all duration-1000 ease-out ${colorClasses[color]}`}
-            strokeWidth="8"
+            strokeWidth="5"
             strokeDasharray={circumference}
             strokeDashoffset={circumference}
             strokeLinecap="round"
@@ -53,6 +55,6 @@ export function ProgressCircle({ value, label, color }: ProgressCircleProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

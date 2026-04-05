@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
 import { TrendingUp } from 'lucide-react';
 import { ProgressCircle } from '../ui/ProgressCircle';
 import { studentProfile, subjects } from '../../data/data';
-import { fadeInVariants, whileInViewSettings } from '../../lib/animations';
+import {
+  fadeLeftVariants,
+  fadeScaleVariants,
+  staggerContainerVariants,
+  whileInViewSettings,
+} from '../../lib/animations';
 
 export function OverviewSection() {
-  const ref = useRef(null);
-
   const averageGrade =
     Math.round(
       (subjects.reduce((sum, subject) => sum + subject.grade, 0) / subjects.length) * 100,
@@ -16,12 +18,11 @@ export function OverviewSection() {
   return (
     <section
       id="overview"
-      ref={ref}
       className="py-20 px-4 bg-linear-to-b from-background via-background to-card"
     >
       <div className="max-w-7xl mx-auto">
         <motion.div
-          variants={fadeInVariants}
+          variants={fadeLeftVariants}
           initial="hidden"
           whileInView="visible"
           {...whileInViewSettings}
@@ -35,32 +36,24 @@ export function OverviewSection() {
           </p>
         </motion.div>
 
-        <motion.div className="grid md:grid-cols-2 gap-12 lg:gap-16 justify-items-center">
-          <motion.div
-            variants={fadeInVariants}
-            initial="hidden"
-            whileInView="visible"
-            {...whileInViewSettings}
-          >
-            <ProgressCircle value={averageGrade} label="Average Grade" color="primary" />
-          </motion.div>
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          {...whileInViewSettings}
+          className="grid md:grid-cols-2 gap-12 lg:gap-16 justify-items-center"
+        >
+          <ProgressCircle value={averageGrade} label="Average Grade" color="primary" />
 
-          <motion.div
-            variants={fadeInVariants}
-            initial="hidden"
-            whileInView="visible"
-            {...whileInViewSettings}
-          >
-            <ProgressCircle
-              value={studentProfile.attendance}
-              label="Attendance Rate"
-              color="success"
-            />
-          </motion.div>
+          <ProgressCircle
+            value={studentProfile.attendance}
+            label="Attendance Rate"
+            color="success"
+          />
         </motion.div>
 
         <motion.div
-          variants={fadeInVariants}
+          variants={fadeScaleVariants}
           initial="hidden"
           whileInView="visible"
           {...whileInViewSettings}

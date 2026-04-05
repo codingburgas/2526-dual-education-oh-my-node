@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import type { Subject } from '../../data/data';
+import { fadeUpVariants } from '../../lib/animations';
 
 type SubjectCardProps = {
   subject: Subject;
@@ -14,7 +16,10 @@ export function SubjectCard({ subject }: SubjectCardProps) {
   };
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+    <motion.div
+      variants={fadeUpVariants}
+      className="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+    >
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-lg font-semibold text-card-foreground">{subject.name}</h3>
@@ -26,6 +31,6 @@ export function SubjectCard({ subject }: SubjectCardProps) {
         <span className="text-4xl font-bold text-primary">{subject.grade}</span>
         <span className="text-sm text-muted-foreground">/100</span>
       </div>
-    </div>
+    </motion.div>
   );
 }
