@@ -1,45 +1,42 @@
 import { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import {
-  initializeSession,
-  subscribeToAuthChanges,
-  signOut as signOutAuth,
-  getUserDisplayName,
-  isAnonymous,
-} from '../lib/auth';
+import { supabase } from '../lib/supabase';
 import AuthContext from './AuthContext';
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const displayName = session?.user.email || 'User';
 
   useEffect(() => {
-    initializeSession().then(initialSession => {
-      setSession(initialSession);
+    const getInitialSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setSession(session);
+      setLoading(false);
+    };
+    getInitialSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
       setLoading(false);
     });
 
-    const unsubscribe = subscribeToAuthChanges(newSession => {
-      setSession(newSession);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
-  const handleLogout = async () => {
+  const logout = async () => {
     setSession(null);
-    await signOutAuth();
+
+    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      console.error(`Sign out error: ${error.message}`);
+    }
   };
 
-  const displayName = getUserDisplayName(session);
-  const isAnonymousUser = isAnonymous(session);
-
   return (
-    <AuthContext.Provider
-      value={{ session, loading, displayName, isAnonymousUser, logout: handleLogout }}
-    >
+    <AuthContext.Provider value={{ session, loading, displayName, logout }}>
       {children}
     </AuthContext.Provider>
   );

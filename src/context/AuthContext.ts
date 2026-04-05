@@ -5,7 +5,6 @@ export type AuthContextType = {
   session: Session | null;
   loading: boolean;
   displayName: string;
-  isAnonymousUser: boolean;
   logout: () => Promise<void>;
 };
 
