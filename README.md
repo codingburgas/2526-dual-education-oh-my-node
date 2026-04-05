@@ -37,6 +37,7 @@
   - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
+- [JavaScript Functionality Overview](#javascript-functionality-overview)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -88,6 +89,18 @@ src/
 ├── App.tsx
 └── main.tsx
 ```
+
+## JavaScript Functionality Overview
+
+This project uses JavaScript/TypeScript logic to make the interface dynamic and interactive. It handles user authentication, route protection, theme switching, assignment and achievement rendering from data, and animated UI transitions. React state, context providers, and reusable hooks are used to update the UI in real time based on user actions.
+
+| Functionality | Main Area | Purpose |
+| --- | --- | --- |
+| Authentication | Auth context + Supabase | Logs users in securely and keeps session state |
+| Route Protection | ProtectedRoute component | Prevents access to pages for unauthenticated users |
+| Theme Toggle | Theme context + toggle UI | Switches between light and dark mode |
+| Data Rendering | Sections and UI components | Displays subjects, assignments, and achievements from data |
+| Animations | Framer Motion utilities | Adds smooth transitions and better user experience |
 
 ## Getting Started
 
