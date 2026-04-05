@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { GraduationCap } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 import {
@@ -10,6 +11,23 @@ import {
 export function HeroSection() {
   const { displayName } = useAuth();
   const userName = displayName.slice(0, displayName.indexOf('@'));
+  const taglines = [
+    'Track your academic progress',
+    'Stay on top of your assignments',
+    'Visualize your achievements',
+    'Keep every milestone in view',
+  ];
+  const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTaglineIndex(previousIndex => (previousIndex + 1) % taglines.length);
+    }, 2000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [taglines.length]);
 
   return (
     <section
@@ -52,15 +70,26 @@ export function HeroSection() {
           </h1>
         </motion.div>
 
-        <motion.p
+        <motion.div
           variants={heroSubtleFadeVariants}
           initial="hidden"
           animate="visible"
           custom={0.5}
-          className="text-lg md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto"
+          className="mb-8"
         >
-          Track your academic progress, assignments, and achievements in one place.
-        </motion.p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentTaglineIndex}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className="text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto"
+            >
+              {taglines[currentTaglineIndex]}
+            </motion.p>
+          </AnimatePresence>
+        </motion.div>
 
         <motion.div
           variants={heroSubtleFadeVariants}
